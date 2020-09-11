@@ -1,1 +1,107 @@
-//todo implement styles for the TodoList here
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  min-height: 75px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+  overflow: auto;
+}
+
+.text-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  height: 50px;
+  width: 450px;
+  border-top: 1px solid white;
+  border-right: 1px solid white;
+  border-left: 1px solid white;
+  border-bottom: 1px solid darkgrey;
+  outline: none;
+  text-indent: 15px;
+  font-size: 18px;
+}
+
+.text-input::-webkit-input-placeholder {
+  color: grey;
+}
+
+.options-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  text-indent: 10px;
+  width: 475px;
+  height: 50px;
+  font-size: 15px;
+}
+
+.div-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 200px;
+}
+
+input[type="radio"] {
+  display: inline-block;
+}
+input[type="radio"]{
+  display: none;
+}
+
+input[type="radio"] + label {
+  //display: inline-block;
+  background: none;
+  font-size: 15px;
+  padding: 5px;
+  //height: 30px;
+  border: 1px solid white;
+}
+input[type="radio"]:checked + label {
+  border: 1px solid darkgrey;
+  border-radius: 5px;
+}
+
+.button-new {
+  background: none;
+  height: 35px;
+  font-size: 15px;
+  border: none;
+  color: darkgrey;
+  outline: none;
+}
+
+.button-new:hover {
+  outline: none;
+  color: black;
+}
+
+.button-hide {
+  background: none;
+  height: 35px;
+  font-size: 15px;
+  border: none;
+  color: white;
+}
+
+.button-hide:focus {
+  outline: none;
+
+}
+.none{
+  display: none;
+}
+
+.div-input{
+  height: 90px;
+
+}
