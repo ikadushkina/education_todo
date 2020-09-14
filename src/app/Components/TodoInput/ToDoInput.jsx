@@ -9,7 +9,8 @@ export default function ToDoInput({addTask, value, onChange}){
                className='text-input'
                placeholder='Enter your task name here'
                onChange={onChange}
-               onKeyPress={addTask}/>
+               onKeyPress={addTask}
+        />
     </div>
     )
 }

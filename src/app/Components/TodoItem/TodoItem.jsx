@@ -3,8 +3,6 @@ import React from 'react';
 // import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import './TodoItem.scss';
 import store from "../../store";
-import {initialState} from "../../Containers/TodoList/todoSlice";
-
 
 /**
  * todo implement here component which will show todo item
@@ -21,21 +19,23 @@ import {initialState} from "../../Containers/TodoList/todoSlice";
  */
 export default function TodoItem({handleChange, id, checked, text, deleteTask}) {
     return (
-        <div className='task'>
-            <div className='one-task'>
-                <input
-                    type='checkbox'
-                    id={id}
-                    checked={checked}
-                    onChange={handleChange}
-                    className={checked && 'check-checked'}
-                /><label htmlFor={id}/>
-                <p className={checked && 'completed-task'}>{text}</p>
-            </div>
-            <div
-                className='trash-style'
+    <div className='task'>
+        <div className='one-task'>
+            <input
+                type='checkbox'
+                key={id}
                 id={id}
-                onClick={deleteTask}/>
+                checked={checked}
+                onChange={handleChange}
+                className={checked && 'check-checked'}
+            /><label htmlFor={id}/>
+            <p className={checked  && 'completed-task'}>{text}</p>
         </div>
+        <div
+            className='trash-style'
+            id={id}
+            onClick={deleteTask}
+        />
+    </div>
     )
 }

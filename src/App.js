@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import TodoList from "./app/Containers/TodoList/TodoList";
 
-
 function App() {
   return (
     <div className='App'>
