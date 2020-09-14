@@ -30,28 +30,35 @@ export class TodoList extends React.Component {
     // constructor(props) {
     //     super(props);
     // }
-    addTask = e => {
+    addTask (e) {
         if (e.key !== 'Enter') return
         this.props.onAddTask(e.target.value);
         e.target.value = '';
     }
 
-    markAsCompleted = e => {
+    markAsCompleted (e) {
         console.log('....', e.target.id);
         this.props.onMark(e.target.id)
     }
+
+    deleteTask (e) {
+        console.log('....', e.target.id);
+        this.props.onDelete(e.target.id)
+    }
+
 
     render() {
         const task = this.props.tasks
         return (
             <div className='main-container'>
-                <ToDoInput addTask={this.addTask} />
+                <ToDoInput addTask={this.addTask.bind(this)} />
                 {
                     task.map(elem =>
                    <TodoItem
                        {...elem}
                         key={elem.id}
-                       handleChange={this.markAsCompleted}
+                       handleChange={this.markAsCompleted.bind(this)}
+                       deleteTask={this.deleteTask.bind(this)}
                    />
                 )}
                 <div className='options-panel'>
@@ -91,7 +98,14 @@ const mapDispatchToProps = dispatch => ({
     onMark: (id) => {
         dispatch({
             type: 'CHECKED',
-            id: id })
+            id: id
+        })
+    },
+    onDelete: (id) => {
+        dispatch({
+            type: 'DELETE_TASK',
+            id: id
+        })
     }
 });
 //todo implement this function
