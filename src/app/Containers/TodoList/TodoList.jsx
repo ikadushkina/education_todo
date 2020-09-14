@@ -83,7 +83,7 @@ const mapDispatchToProps = dispatch => ({
     onAddTask: (taskText) => {
         dispatch({
             type: 'ADD_TASK',
-            id: store.getState().reducer[this.props.tasks.length - 1].id + 1,
+            id: store.getState().reducer[store.getState().reducer.length - 1].id + 1,
             text: taskText,
             checked: false
         })
