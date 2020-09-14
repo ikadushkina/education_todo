@@ -27,9 +27,9 @@ export default function TodoItem({handleChange, id, checked, text, deleteTask}) 
                 id={id}
                 checked={checked}
                 onChange={handleChange}
-                className={checked && 'check-checked'}
+                className={checked ? 'check-checked' : 'false'}
             /><label htmlFor={id}/>
-            <p className={checked  && 'completed-task'}>{text}</p>
+            <p className={checked ? 'completed-task' : 'false'}>{text}</p>
         </div>
         <div
             className='trash-style'

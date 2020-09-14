@@ -32,7 +32,8 @@ export class TodoList extends React.Component {
     // }
     addTask (e) {
         if (e.key !== 'Enter') return
-        this.props.onAddTask(e.target.value);
+        let id = this.props.tasks.length ? this.props.tasks[this.props.tasks.length - 1].id + 1 : 0
+        this.props.onAddTask(e.target.value, id);
         e.target.value = '';
     }
 
@@ -45,7 +46,6 @@ export class TodoList extends React.Component {
         console.log('....', e.target.id);
         this.props.onDelete(e.target.id)
     }
-
 
     render() {
         const task = this.props.tasks
@@ -87,24 +87,24 @@ const mapStateToProps = () => { return {
 } }//todo setup this method for get info from the global state
 
 const mapDispatchToProps = dispatch => ({
-    onAddTask: (taskText) => {
+    onAddTask: (taskText, id) => {
         dispatch({
             type: 'ADD_TASK',
-            id: store.getState().reducer[store.getState().reducer.length - 1].id + 1,
+            id: id,
             text: taskText,
-            checked: false
+            checked: false,
         })
     },
     onMark: (id) => {
         dispatch({
             type: 'CHECKED',
-            id: id
+            id: id,
         })
     },
     onDelete: (id) => {
         dispatch({
             type: 'DELETE_TASK',
-            id: id
+            id: id,
         })
     }
 });
