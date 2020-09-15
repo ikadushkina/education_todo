@@ -33,20 +33,7 @@ export class TodoList extends React.Component {
         const text = e.target.value
         const id = this.props.tasks.length ? this.props.tasks[this.props.tasks.length - 1].id + 1 : 0
         this.props.onAddTask(text, id);
-        console.log('....', store.getState());
         e.target.value = '';
-    }
-
-    filters = (filter) => {
-        switch (filter) {
-            case 'All':
-                return this.props.tasks
-            case 'ToDo':
-                return this.props.tasks.filter(item => !item.checked)
-            case 'Completed':
-            default:
-        }
-        console.log('active: ', this.props.activeFilter);
     }
 
     render() {
