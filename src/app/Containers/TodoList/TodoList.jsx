@@ -27,10 +27,8 @@ import ToDoInput from "../../Components/TodoInput/ToDoInput";
  * todo implement HOC for display the list of the todos and control panel and input for add new todos
  */
 export class TodoList extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    // }
-    addTask (e) {
+
+    addTask = e => {
         if (e.key !== 'Enter') return
         const text = e.target.value
         const id = this.props.tasks.length ? this.props.tasks[this.props.tasks.length - 1].id + 1 : 0
@@ -39,12 +37,11 @@ export class TodoList extends React.Component {
 
     }
 
-
     render() {
         const task = this.props.tasks
         return (
             <div className='main-container'>
-                <ToDoInput addTask={this.addTask.bind(this)} />
+                <ToDoInput addTask={this.addTask} />
                 {
                     task.map(elem =>
                    <TodoItem
@@ -55,20 +52,21 @@ export class TodoList extends React.Component {
                    />
                 )}
                 <div className='options-panel'>
-                {/*    <button*/}
-                {/*        onClick={this.completed}*/}
-                {/*            value='all'*/}
-                {/*            className='button-new'>{this.state.list.filter(elem => !elem.checked).length} tasks left*/}
-                {/*    />*/}
-                {/*    <RadioBadge*/}
-                {/*        checked={currentFilter}*/}
-                {/*        bags={controlBadges}*/}
-                {/*        onChange={this.filters}*/}
-                {/*    />*/}
-                {/*    <button*/}
-                {/*        onClick={this.completed} value='clear'*/}
-                {/*        className={!this.state.list.filter(elem => elem.checked).length ? 'button-hide' : 'button-new'}>clearCompleted*/}
-                {/*    />*/}
+                    <button
+                        onClick={this.completed}
+                            value='all'
+                            className='button-new' >
+                        {task.filter(elem => !elem.checked).length} tasks left
+                        </button>
+                    <RadioBadge
+                        // checked={currentFilter}
+                        bags={controlBadges}
+                        // onChange={this.filters}
+                    />
+                    <button
+                        onClick={this.completed} value='clear'
+                        className={!task.filter(elem => elem.checked).length ? 'button-hide' : 'button-new'}>clearCompleted
+                        </button>
                 </div>
             </div>
         )
