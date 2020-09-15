@@ -34,7 +34,6 @@ export class TodoList extends React.Component {
         const id = this.props.tasks.length ? this.props.tasks[this.props.tasks.length - 1].id + 1 : 0
         this.props.onAddTask(text, id);
         e.target.value = '';
-
     }
 
     render() {
@@ -53,7 +52,7 @@ export class TodoList extends React.Component {
                 )}
                 <div className='options-panel'>
                     <button
-                        onClick={this.completed}
+                        onClick={this.props.onCompleted}
                             value='all'
                             className='button-new' >
                         {task.filter(elem => !elem.checked).length} tasks left
@@ -64,7 +63,7 @@ export class TodoList extends React.Component {
                         // onChange={this.filters}
                     />
                     <button
-                        onClick={this.completed} value='clear'
+                        onClick={this.props.onClear} value='clear'
                         className={!task.filter(elem => elem.checked).length ? 'button-hide' : 'button-new'}>clearCompleted
                         </button>
                 </div>
@@ -97,6 +96,17 @@ const mapDispatchToProps = dispatch => {
             dispatch({
                 type: 'DELETE_TASK',
                 id: id,
+            })
+        },
+
+        onClear: () => {
+            dispatch({
+                type: 'CLEAR'
+            })
+        },
+        onCompleted: () =>{
+            dispatch({
+                type: 'COMPLETED_ALL'
             })
         }
     }
