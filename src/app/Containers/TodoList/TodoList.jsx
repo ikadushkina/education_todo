@@ -37,34 +37,42 @@ export class TodoList extends React.Component {
         e.target.value = '';
     }
 
- //    filters = (filter) => {
- //     switch (filter) {
- //         case 'All':
- //             this.props({currentFilter: 'All'})
- //             break;
- //         case 'ToDo':
- //             this.setState({currentFilter: 'ToDo'})
- //             break;
- //         case 'Completed':
- //             this.setState({currentFilter: 'Completed'})
- //             break;
- //     }
- // }
+    filters = (filter) => {
+     switch (filter) {
+         case 'All':
+             return this.props.tasks
+         case 'ToDo':
+             return this.props.tasks.filter(item => !item.checked)
+         case 'Completed':
+         default:
+     }
+     console.log('active: ', this.props.activeFilter );
+ }
 
     render() {
         const task = this.props.tasks
         return (
             <div className='main-container'>
                 <ToDoInput addTask={this.addTask} />
-                {
-                    task.map(elem =>
-                   <TodoItem
+                <div className='task-container'>
+                {task.filter(elem => {
+                    switch (this.props.activeFilter) {
+                        case 'Completed':
+                            return elem.checked;
+                        case 'ToDo':
+                            return !elem.checked;
+                        case  'All':
+                            return true;
+                    }
+                }).map(elem => (
+                    <TodoItem
                        {...elem}
                        key={elem.id}
                        handleChange={() => this.props.onMark(elem.id)}
                        deleteTask={() => this.props.onDelete(elem.id)}
                    />
-                )}
+                    ))}
+                </div>
                 <div className='options-panel'>
                     <button
                         onClick={this.props.onCompleted}
@@ -73,9 +81,9 @@ export class TodoList extends React.Component {
                         {task.filter(elem => !elem.checked).length} tasks left
                         </button>
                     <RadioBadge
-                        // checked={currentFilter}
+                        checked={this.props.activeFilter}
                         bags={controlBadges}
-                        // onChange={this.filters}
+                        onChange={(a) => this.props.onFilters(a)}
                     />
                     <button
                         onClick={this.props.onClear} value='clear'
@@ -88,7 +96,8 @@ export class TodoList extends React.Component {
 }
 
 const mapStateToProps = () => { return {
-    tasks: store.getState().reducer.tasks
+    tasks: store.getState().reducer.tasks,
+    activeFilter: store.getState().reducer.currentFilter
 } }//todo setup this method for get info from the global state
 
 const mapDispatchToProps = dispatch => {
@@ -124,6 +133,13 @@ const mapDispatchToProps = dispatch => {
             dispatch({
                 type: 'COMPLETED_ALL'
             })
+        },
+        onFilters: (filter) => {
+            switch (filter){
+                case 'All': return dispatch({ type: 'ALL_FILTER' });
+                case 'ToDo': return dispatch({ type:'TODO_FILTER'});
+                case 'Completed': return dispatch({ type: 'COMPLETED_FILTER'})
+            }
         }
     }
 };

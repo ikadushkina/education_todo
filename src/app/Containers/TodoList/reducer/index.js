@@ -27,6 +27,12 @@ export default function (state = initialState, action){
             return {...state, tasks: state.tasks.map(item => ({...item, checked: false}))};
         case 'COMPLETED_ALL':
             return {...state, tasks: state.tasks.map(item => ({...item, checked: true}))};
+        case 'ALL_FILTER':
+            return {...state, currentFilter: 'All'};
+        case 'TODO_FILTER':
+            return {...state, currentFilter: 'ToDo'}
+        case 'COMPLETED_FILTER':
+            return {...state, currentFilter: 'Completed'}
         default:
             return  state;
     }
