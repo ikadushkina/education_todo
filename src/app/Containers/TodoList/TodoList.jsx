@@ -33,8 +33,23 @@ export class TodoList extends React.Component {
         const text = e.target.value
         const id = this.props.tasks.length ? this.props.tasks[this.props.tasks.length - 1].id + 1 : 0
         this.props.onAddTask(text, id);
+        console.log('....', store.getState());
         e.target.value = '';
     }
+
+ //    filters = (filter) => {
+ //     switch (filter) {
+ //         case 'All':
+ //             this.props({currentFilter: 'All'})
+ //             break;
+ //         case 'ToDo':
+ //             this.setState({currentFilter: 'ToDo'})
+ //             break;
+ //         case 'Completed':
+ //             this.setState({currentFilter: 'Completed'})
+ //             break;
+ //     }
+ // }
 
     render() {
         const task = this.props.tasks
@@ -73,7 +88,7 @@ export class TodoList extends React.Component {
 }
 
 const mapStateToProps = () => { return {
-    tasks: store.getState().reducer
+    tasks: store.getState().reducer.tasks
 } }//todo setup this method for get info from the global state
 
 const mapDispatchToProps = dispatch => {
@@ -104,6 +119,7 @@ const mapDispatchToProps = dispatch => {
                 type: 'CLEAR'
             })
         },
+
         onCompleted: () =>{
             dispatch({
                 type: 'COMPLETED_ALL'

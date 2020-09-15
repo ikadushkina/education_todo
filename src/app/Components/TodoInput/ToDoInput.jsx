@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ToDoInput({addTask, value, onChange}){
+export default function ToDoInput({ addTask, value, onChange}){
     return(
     <div className='div-input'>
         <input type='text'

@@ -8,21 +8,25 @@ const initialState = {
         checked: true,
     }
     ],
-    currentFilter: 'All'
+    currentFilter: 'All',
 }
 
-export default function (state = initialState.tasks, action){
+export default function (state = initialState, action){
     switch (action.type) {
         case 'ADD_TASK':
-            return [...state, { id: action.id, text: action.text, checked: action.checked }];
+            return {
+                ...state,
+                tasks: [...state.tasks, { id: action.id, text: action.text, checked: action.checked }]
+            };
+            // return [...state, { id: action.id, text: action.text, checked: action.checked }];
         case 'DELETE_TASK':
-            return state.filter( elem => elem.id !== action.id );
+            return {...state, tasks: state.tasks.filter( elem => elem.id !== action.id )};
         case 'CHECKED':
-            return state.map(item => item.id === action.id ? {...item, checked: !item.checked} : item );
+            return {...state, tasks: state.tasks.map(item => item.id === action.id ? {...item, checked: !item.checked} : item )};
         case 'CLEAR':
-            return state.map(item => ({...item, checked: false}));
+            return {...state, tasks: state.tasks.map(item => ({...item, checked: false}))};
         case 'COMPLETED_ALL':
-            return state.map(item => ({...item, checked: true}));
+            return {...state, tasks: state.tasks.map(item => ({...item, checked: true}))};
         default:
             return  state;
     }
