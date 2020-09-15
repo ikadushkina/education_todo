@@ -32,20 +32,13 @@ export class TodoList extends React.Component {
     // }
     addTask (e) {
         if (e.key !== 'Enter') return
-        let id = this.props.tasks.length ? this.props.tasks[this.props.tasks.length - 1].id + 1 : 0
-        this.props.onAddTask(e.target.value, id);
+        const text = e.target.value
+        const id = this.props.tasks.length ? this.props.tasks[this.props.tasks.length - 1].id + 1 : 0
+        this.props.onAddTask(text, id);
         e.target.value = '';
+
     }
 
-    markAsCompleted (e) {
-        console.log('....', e.target.id);
-        this.props.onMark(e.target.id)
-    }
-
-    deleteTask (e) {
-        console.log('....', e.target.id);
-        this.props.onDelete(e.target.id)
-    }
 
     render() {
         const task = this.props.tasks
@@ -56,9 +49,9 @@ export class TodoList extends React.Component {
                     task.map(elem =>
                    <TodoItem
                        {...elem}
-                        key={elem.id}
-                       handleChange={this.markAsCompleted.bind(this)}
-                       deleteTask={this.deleteTask.bind(this)}
+                       key={elem.id}
+                       handleChange={() => this.props.onMark(elem.id)}
+                       deleteTask={() => this.props.onDelete(elem.id)}
                    />
                 )}
                 <div className='options-panel'>
@@ -86,28 +79,30 @@ const mapStateToProps = () => { return {
     tasks: store.getState().reducer
 } }//todo setup this method for get info from the global state
 
-const mapDispatchToProps = dispatch => ({
-    onAddTask: (taskText, id) => {
-        dispatch({
-            type: 'ADD_TASK',
-            id: id,
-            text: taskText,
-            checked: false,
-        })
-    },
-    onMark: (id) => {
-        dispatch({
-            type: 'CHECKED',
-            id: id,
-        })
-    },
-    onDelete: (id) => {
-        dispatch({
-            type: 'DELETE_TASK',
-            id: id,
-        })
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddTask: (taskText, id) => {
+            dispatch({
+                type: 'ADD_TASK',
+                id: id,
+                text: taskText,
+                checked: false,
+            })
+        },
+        onMark: (id) => {
+            dispatch({
+                type: 'CHECKED',
+                id: id,
+            })
+        },
+        onDelete: (id) => {
+            dispatch({
+                type: 'DELETE_TASK',
+                id: id,
+            })
+        }
     }
-});
+};
 //todo implement this function
 
 
