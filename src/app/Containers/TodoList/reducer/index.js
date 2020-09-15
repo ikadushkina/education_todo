@@ -1,3 +1,5 @@
+import * as constants from './constants';
+
 const initialState = {
     tasks: [
     ],
@@ -6,27 +8,27 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case 'ADD_TASK':
+        case constants.ADD_TASK:
             return {
                 ...state,
                 tasks: [...state.tasks, {id: action.id, text: action.text, checked: action.checked}]
             };
-        case 'DELETE_TASK':
+        case constants.DELETE_TASK:
             return {...state, tasks: state.tasks.filter(elem => elem.id !== action.id)};
-        case 'CHECKED':
+        case constants.CHECKED:
             return {
                 ...state,
                 tasks: state.tasks.map(item => item.id === action.id ? {...item, checked: !item.checked} : item)
             };
-        case 'CLEAR':
+        case constants.CLEAR_COMPLETED:
             return {...state, tasks: state.tasks.map(item => ({...item, checked: false}))};
-        case 'COMPLETED_ALL':
+        case constants.COMPLETED_ALL:
             return {...state, tasks: state.tasks.map(item => ({...item, checked: true}))};
-        case 'ALL_FILTER':
+        case constants.ALL_FILTER:
             return {...state, currentFilter: 'All'};
-        case 'TODO_FILTER':
+        case constants.TODO_FILTER:
             return {...state, currentFilter: 'ToDo'}
-        case 'COMPLETED_FILTER':
+        case constants.COMPLETED_FILTER:
             return {...state, currentFilter: 'Completed'}
         default:
             return state;

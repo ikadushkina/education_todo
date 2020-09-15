@@ -1,13 +1,13 @@
 import * as constants from './constants';
 
-export function addTask(){
-    return { type: constants.ADD_TASK }
+export function addTask(id, text, checked){
+    return { type: constants.ADD_TASK, id: id, text: text, checked: checked }
 }
-export  function deleteTask(){
-    return { type: constants.DELETE_TASK }
+export  function deleteTask(id){
+    return { type: constants.DELETE_TASK, id}
 }
-export function checkedTask(){
-    return {type: constants.CHECKED}
+export function checkedTask(id){
+    return {type: constants.CHECKED, id}
 }
 export function completedAll(){
     return { type: constants.COMPLETED_ALL }

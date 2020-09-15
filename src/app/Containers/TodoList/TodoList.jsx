@@ -20,6 +20,7 @@ import RadioBadge from "../../Components/RadioBadge/RaidoBadge";
 
 import {controlBadges} from '../../constants/todo';
 import ToDoInput from "../../Components/TodoInput/ToDoInput";
+import {addTask, deleteTask, checkedTask, completedAll, clearCompleted, filterAll, filterTodo, filterCompleted} from "./reducer/actions";
 // import connect from "react-redux/lib/connect/connect";
 // import {initialState, todoSlice} from "./todoSlice";
 
@@ -91,46 +92,32 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddTask: (taskText, id) => {
-            dispatch({
-                type: 'ADD_TASK',
-                id: id,
-                text: taskText,
-                checked: false,
-            })
+        onAddTask: (text, id) => {
+            dispatch(addTask(id, text, false))
         },
         onMark: (id) => {
-            dispatch({
-                type: 'CHECKED',
-                id: id,
-            })
+            dispatch(checkedTask(id))
         },
+
         onDelete: (id) => {
-            dispatch({
-                type: 'DELETE_TASK',
-                id: id,
-            })
+            dispatch(deleteTask(id))
         },
 
         onClear: () => {
-            dispatch({
-                type: 'CLEAR'
-            })
+            dispatch(clearCompleted())
         },
 
         onCompleted: () => {
-            dispatch({
-                type: 'COMPLETED_ALL'
-            })
+            dispatch(completedAll())
         },
         onFilters: (filter) => {
             switch (filter) {
                 case 'All':
-                    return dispatch({type: 'ALL_FILTER'});
+                    return dispatch(filterAll());
                 case 'ToDo':
-                    return dispatch({type: 'TODO_FILTER'});
+                    return dispatch(filterTodo());
                 case 'Completed':
-                    return dispatch({type: 'COMPLETED_FILTER'})
+                    return dispatch(filterCompleted())
             }
         }
     }
