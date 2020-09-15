@@ -1,10 +1,5 @@
 const initialState = {
     tasks: [
-        {
-            id: 0,
-            text: 'This is first test task',
-            checked: true,
-        }
     ],
     currentFilter: 'All',
 }

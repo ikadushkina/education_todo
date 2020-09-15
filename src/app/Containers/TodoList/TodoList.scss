@@ -59,11 +59,9 @@ input[type="radio"]{
 }
 
 input[type="radio"] + label {
-  //display: inline-block;
   background: none;
   font-size: 15px;
   padding: 5px;
-  //height: 30px;
   border: 1px solid white;
 }
 input[type="radio"]:checked + label {

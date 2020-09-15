@@ -73,7 +73,7 @@ export class TodoList extends React.Component {
                         />
                     ))}
                 </div>
-                <div className='options-panel'>
+                <div className={this.props.tasks.length ? 'options-panel' : 'none'}>
                     <button
                         onClick={this.props.onCompleted}
                         value='all'
