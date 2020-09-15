@@ -1,7 +1,7 @@
 import React from 'react';
 import TodoItem from '../../Components/TodoItem/TodoItem';
 import store from "../../store";
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 /**
  * todo implement component called ToDoInput
@@ -38,48 +38,48 @@ export class TodoList extends React.Component {
     }
 
     filters = (filter) => {
-     switch (filter) {
-         case 'All':
-             return this.props.tasks
-         case 'ToDo':
-             return this.props.tasks.filter(item => !item.checked)
-         case 'Completed':
-         default:
-     }
-     console.log('active: ', this.props.activeFilter );
- }
+        switch (filter) {
+            case 'All':
+                return this.props.tasks
+            case 'ToDo':
+                return this.props.tasks.filter(item => !item.checked)
+            case 'Completed':
+            default:
+        }
+        console.log('active: ', this.props.activeFilter);
+    }
 
     render() {
         const task = this.props.tasks
         return (
             <div className='main-container'>
-                <ToDoInput addTask={this.addTask} />
+                <ToDoInput addTask={this.addTask}/>
                 <div className='task-container'>
-                {task.filter(elem => {
-                    switch (this.props.activeFilter) {
-                        case 'Completed':
-                            return elem.checked;
-                        case 'ToDo':
-                            return !elem.checked;
-                        case  'All':
-                            return true;
-                    }
-                }).map(elem => (
-                    <TodoItem
-                       {...elem}
-                       key={elem.id}
-                       handleChange={() => this.props.onMark(elem.id)}
-                       deleteTask={() => this.props.onDelete(elem.id)}
-                   />
+                    {task.filter(elem => {
+                        switch (this.props.activeFilter) {
+                            case 'Completed':
+                                return elem.checked;
+                            case 'ToDo':
+                                return !elem.checked;
+                            case  'All':
+                                return true;
+                        }
+                    }).map(elem => (
+                        <TodoItem
+                            {...elem}
+                            key={elem.id}
+                            handleChange={() => this.props.onMark(elem.id)}
+                            deleteTask={() => this.props.onDelete(elem.id)}
+                        />
                     ))}
                 </div>
                 <div className='options-panel'>
                     <button
                         onClick={this.props.onCompleted}
-                            value='all'
-                            className='button-new' >
+                        value='all'
+                        className='button-new'>
                         {task.filter(elem => !elem.checked).length} tasks left
-                        </button>
+                    </button>
                     <RadioBadge
                         checked={this.props.activeFilter}
                         bags={controlBadges}
@@ -88,17 +88,19 @@ export class TodoList extends React.Component {
                     <button
                         onClick={this.props.onClear} value='clear'
                         className={!task.filter(elem => elem.checked).length ? 'button-hide' : 'button-new'}>clearCompleted
-                        </button>
+                    </button>
                 </div>
             </div>
         )
     }
 }
 
-const mapStateToProps = () => { return {
-    tasks: store.getState().reducer.tasks,
-    activeFilter: store.getState().reducer.currentFilter
-} }//todo setup this method for get info from the global state
+const mapStateToProps = () => {
+    return {
+        tasks: store.getState().reducer.tasks,
+        activeFilter: store.getState().reducer.currentFilter
+    }
+}//todo setup this method for get info from the global state
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -129,74 +131,23 @@ const mapDispatchToProps = dispatch => {
             })
         },
 
-        onCompleted: () =>{
+        onCompleted: () => {
             dispatch({
                 type: 'COMPLETED_ALL'
             })
         },
         onFilters: (filter) => {
-            switch (filter){
-                case 'All': return dispatch({ type: 'ALL_FILTER' });
-                case 'ToDo': return dispatch({ type:'TODO_FILTER'});
-                case 'Completed': return dispatch({ type: 'COMPLETED_FILTER'})
+            switch (filter) {
+                case 'All':
+                    return dispatch({type: 'ALL_FILTER'});
+                case 'ToDo':
+                    return dispatch({type: 'TODO_FILTER'});
+                case 'Completed':
+                    return dispatch({type: 'COMPLETED_FILTER'})
             }
         }
     }
 };
 //todo implement this function
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
-// export default TodoList
-
-// filters = (filter) => {
-//      switch (filter) {
-//          case 'All':
-//              this.setState({currentFilter: 'All'})
-//              break;
-//          case 'ToDo':
-//              this.setState({currentFilter: 'ToDo'})
-//              break;
-//          case 'Completed':
-//              this.setState({currentFilter: 'Completed'})
-//              break;
-//      }
-//  }
-//
-//  componentDidMount() {
-//      this.setState({currentFilter: 'All'})
-//      console.log('....', this.state);
-//  }
-//
-//  handleChange(id) {
-//      const newList = this.state.list.map(item => item.id === id ? {...item, checked: !item.checked} : item);
-//      this.setState({list: newList});
-//  }
-//
-//  deleteTask(id) {
-//      const newList = this.state.list.filter(elem => elem.id !== id)
-//      this.setState({list: newList});
-//  }
-//
-//  addTask(e) {
-//      if (e.key !== 'Enter') return
-//      const {list, newPoint} = this.state
-//      let id;
-//      if(this.state.list.length) id =  list[list.length - 1].id + 1;
-//      else id = 0;
-//      const point = {
-//          id: id,
-//          text: newPoint,
-//          checked: false
-//      }
-//      this.setState({list: [...list, point], newPoint: ''})
-//  }
-//
-//  upInput = e => {
-//      this.setState({newPoint: e.target.value})
-//  }
-//
-//  completed = e => {
-//      const newList = this.state.list.map(item => ({...item, checked: e.target.value === 'all'}));
-//      this.setState({list: newList})
-//  }

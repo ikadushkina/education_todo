@@ -19,23 +19,23 @@ import store from "../../store";
  */
 export default function TodoItem({handleChange, id, checked, text, deleteTask}) {
     return (
-    <div className='task'>
-        <div className='one-task'>
-            <input
-                type='checkbox'
-                key={id}
+        <div className='task'>
+            <div className='one-task'>
+                <input
+                    type='checkbox'
+                    key={id}
+                    id={id}
+                    checked={checked}
+                    onChange={handleChange}
+                    className={checked ? 'check-checked' : 'false'}
+                /><label htmlFor={id}/>
+                <p className={checked ? 'completed-task' : 'false'}>{text}</p>
+            </div>
+            <div
+                className='trash-style'
                 id={id}
-                checked={checked}
-                onChange={handleChange}
-                className={checked ? 'check-checked' : 'false'}
-            /><label htmlFor={id}/>
-            <p className={checked ? 'completed-task' : 'false'}>{text}</p>
+                onClick={deleteTask}
+            />
         </div>
-        <div
-            className='trash-style'
-            id={id}
-            onClick={deleteTask}
-        />
-    </div>
     )
 }
