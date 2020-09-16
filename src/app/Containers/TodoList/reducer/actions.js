@@ -1,7 +1,7 @@
 import * as constants from './constants';
 
 export function addTask(id, text, checked){
-    return { type: constants.ADD_TASK, id: id, text: text, checked: checked }
+    return { type: constants.ADD_TASK, id, text, checked }
 }
 export  function deleteTask(id){
     return { type: constants.DELETE_TASK, id}
