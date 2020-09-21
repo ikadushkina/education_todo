@@ -1,26 +1,149 @@
 import * as constants from './constants';
+import TodoService from "../../../../services/TodoService";
 
-export function addTask(id, text, checked){
-    return { type: constants.ADD_TASK, id, text, checked }
+export const tempTodoGet = () => dispatch => {
+    dispatch({
+        type: constants.TEMP_TODO_START
+    });
+    return TodoService.getTasks().then(res => {
+        dispatch({
+            type: constants.TEMP_TODO_SUCCESS,
+            payload: res.data.list,
+        });
+    }).catch(err => {
+        dispatch({
+            type: constants.TEMP_TODO_ERROR,
+            payload: err,
+        });
+    });
 }
-export  function deleteTask(id){
-    return { type: constants.DELETE_TASK, id}
+
+export const tempAddTask = text => dispatch => {
+    dispatch({
+        type: constants.TEMP_TODO_START
+    });
+    return TodoService.addTask(text).then(res => {
+        dispatch({
+            type: constants.TEMP_TODO_SUCCESS,
+            payload: res.data.list,
+        });
+    }).catch(err => {
+        dispatch({
+            type: constants.TEMP_TODO_ERROR,
+            payload: err,
+        });
+    });
 }
-export function checkedTask(id){
-    return {type: constants.CHECKED, id}
+
+export const tempCheckTask = id => dispatch => {
+    dispatch({
+        type: constants.TEMP_TODO_START
+    });
+    return TodoService.checkTask(id).then( res => {
+        dispatch({
+            type: constants.TEMP_TODO_SUCCESS,
+            payload: res.data.list
+        });
+        }).catch(err => {
+            dispatch({
+                type: constants.TEMP_TODO_ERROR,
+                payload: err
+            });
+    });
 }
-export function completedAll(){
-    return { type: constants.COMPLETED_ALL }
+export const tempDeleteTask = id => dispatch => {
+    dispatch({
+        type: constants.TEMP_TODO_START
+    });
+    return TodoService.deleteTask(id).then( res => {
+        dispatch({
+            type: constants.TEMP_TODO_SUCCESS,
+            payload: res.data.list
+        });
+    }).catch(err => {
+        dispatch({
+            type: constants.TEMP_TODO_ERROR,
+            payload: err
+        });
+    });
 }
-export function clearCompleted(){
-    return { type: constants.CLEAR_COMPLETED }
+export const tempCheckAll = () => dispatch => {
+    dispatch({
+        type: constants.TEMP_TODO_START
+    });
+    return TodoService.checkAll().then( res => {
+        dispatch({
+            type: constants.TEMP_TODO_SUCCESS,
+            payload: res.data.list
+        });
+    }).catch(err => {
+        dispatch({
+            type: constants.TEMP_TODO_ERROR,
+            payload: err
+        });
+    });
 }
-export function filterAll(){
-    return { type: constants.ALL_FILTER }
+export const tempClearCompleted = () => dispatch => {
+    dispatch({
+        type: constants.TEMP_TODO_START
+    });
+    return TodoService.clearCompleted().then( res => {
+        dispatch({
+            type: constants.TEMP_TODO_SUCCESS,
+            payload: res.data.list
+        });
+    }).catch(err => {
+        dispatch({
+            type: constants.TEMP_TODO_ERROR,
+            payload: err
+        });
+    });
 }
-export  function filterTodo(){
-    return { type: constants.TODO_FILTER }
+export const tempFilterAll = () => dispatch => {
+    dispatch({
+        type: constants.TEMP_TODO_START
+    });
+    return TodoService.filterAll().then( res => {
+        dispatch({
+            type: constants.TEMP_TODO_SUCCESS,
+            payload: res.data.list
+        });
+    }).catch(err => {
+        dispatch({
+            type: constants.TEMP_TODO_ERROR,
+            payload: err
+        });
+    });
 }
-export function filterCompleted() {
-    return{ type: constants.COMPLETED_FILTER }
+export const tempFilterTodo = () => dispatch => {
+    dispatch({
+        type: constants.TEMP_TODO_START
+    });
+    return TodoService.filterTodo().then( res => {
+        dispatch({
+            type: constants.TEMP_TODO_SUCCESS,
+            payload: res.data.list
+        });
+    }).catch(err => {
+        dispatch({
+            type: constants.TEMP_TODO_ERROR,
+            payload: err
+        });
+    });
+}
+export const tempFilterCompleted = () => dispatch => {
+    dispatch({
+        type: constants.TEMP_TODO_START
+    });
+    return TodoService.filterCompleted().then( res => {
+        dispatch({
+            type: constants.TEMP_TODO_SUCCESS,
+            payload: res.data.list
+        });
+    }).catch(err => {
+        dispatch({
+            type: constants.TEMP_TODO_ERROR,
+            payload: err
+        });
+    });
 }

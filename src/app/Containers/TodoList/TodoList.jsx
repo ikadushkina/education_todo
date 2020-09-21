@@ -1,6 +1,5 @@
 import React from 'react';
 import TodoItem from '../../Components/TodoItem/TodoItem';
-import store from "../../store";
 import {connect} from 'react-redux'
 
 /**
@@ -20,108 +19,94 @@ import RadioBadge from "../../Components/RadioBadge/RaidoBadge";
 
 import {controlBadges} from '../../constants/todo';
 import ToDoInput from "../../Components/TodoInput/ToDoInput";
-import {addTask, deleteTask, checkedTask, completedAll, clearCompleted, filterAll, filterTodo, filterCompleted} from "./reducer/actions";
-// import connect from "react-redux/lib/connect/connect";
-// import {initialState, todoSlice} from "./todoSlice";
+import {
+    tempAddTask,
+    tempCheckAll,
+    tempCheckTask,
+    tempClearCompleted,
+    tempDeleteTask, tempFilterAll, tempFilterCompleted, tempFilterTodo,
+    tempTodoGet
+} from "./reducer/actions";
+
 
 /**
  * todo implement HOC for display the list of the todos and control panel and input for add new todos
  */
 export class TodoList extends React.Component {
 
+    componentDidMount() {
+        this.props.onStart()
+    }
+
     addTask = e => {
         if (e.key !== 'Enter') return
         const text = e.target.value
-        const id = this.props.tasks.length ? this.props.tasks[this.props.tasks.length - 1].id + 1 : 0
-        this.props.onAddTask(text, id);
+        this.props.onAddTask(text);
         e.target.value = '';
     }
 
     render() {
-        const task = this.props.tasks
+        const {list, isLoading, error } = this.props;
         return (
             <div className='main-container'>
+                {error && <h3 style={{color: 'red'}}>{error.message}</h3>}
                 <ToDoInput addTask={this.addTask}/>
                 <div className='task-container'>
-                    {task.filter(elem => {
-                        switch (this.props.activeFilter) {
-                            case 'Completed':
-                                return elem.checked;
-                            case 'ToDo':
-                                return !elem.checked;
-                            case  'All':
-                                return true;
-                        }
-                    }).map(elem => (
+                    { list && list.map(elem => (
                         <TodoItem
                             {...elem}
                             key={elem.id}
-                            handleChange={() => this.props.onMark(elem.id)}
-                            deleteTask={() => this.props.onDelete(elem.id)}
+                            id={elem.id}
+                            handleChange={() => this.props.onCheckTask(elem.id)}
+                            deleteTask={() => this.props.onDeleteTask(elem.id)}
+                            isCompleted={elem.isCompleted}
                         />
                     ))}
                 </div>
-                <div className={this.props.tasks.length ? 'options-panel' : 'none'}>
+                <div className={list.length ? 'options-panel' : 'none'}>
                     <button
-                        onClick={this.props.onCompleted}
+                        disabled={isLoading}
+                        onClick={this.props.onCheckAll}
                         value='all'
                         className='button-new'>
-                        {task.filter(elem => !elem.checked).length} tasks left
+                        {list.filter(elem => !elem.isCompleted).length} tasks left
                     </button>
                     <RadioBadge
-                        checked={this.props.activeFilter}
                         bags={controlBadges}
                         onChange={(a) => this.props.onFilters(a)}
                     />
                     <button
-                        onClick={this.props.onClear} value='clear'
-                        className={!task.filter(elem => elem.checked).length ? 'button-hide' : 'button-new'}>clearCompleted
+                        disabled={isLoading}
+                        onClick={this.props.onClearCompleted} value='clear'
+                        className={!list.filter(elem => elem.isCompleted).length ? 'button-hide' : 'button-new'}>clearCompleted
                     </button>
                 </div>
-            </div>
+        </div>
         )
     }
 }
+const mapStateToProps = state => state.reducer;
+//todo setup this method for get info from the global state
 
-const mapStateToProps = () => {
-    return {
-        tasks: store.getState().reducer.tasks,
-        activeFilter: store.getState().reducer.currentFilter
-    }
-}//todo setup this method for get info from the global state
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onAddTask: (text, id) => {
-            dispatch(addTask(id, text, false))
-        },
-        onMark: (id) => {
-            dispatch(checkedTask(id))
-        },
-
-        onDelete: (id) => {
-            dispatch(deleteTask(id))
-        },
-
-        onClear: () => {
-            dispatch(clearCompleted())
-        },
-
-        onCompleted: () => {
-            dispatch(completedAll())
-        },
+const mapDispatchToProps = dispatch => ({
+        onStart: () => dispatch(tempTodoGet()),
+        onAddTask: text => dispatch(tempAddTask(text)),
+        onCheckTask: id => dispatch(tempCheckTask(id)),
+        onDeleteTask: id => dispatch(tempDeleteTask(id)),
+        onCheckAll: () => dispatch(tempCheckAll()),
+        onClearCompleted: () => dispatch(tempClearCompleted()),
         onFilters: (filter) => {
             switch (filter) {
                 case 'All':
-                    return dispatch(filterAll());
+                    return dispatch(tempFilterAll());
                 case 'ToDo':
-                    return dispatch(filterTodo());
+                    return dispatch(tempFilterTodo());
                 case 'Completed':
-                    return dispatch(filterCompleted())
+                    return dispatch(tempFilterCompleted())
             }
         }
     }
-};
+);
 //todo implement this function
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList)

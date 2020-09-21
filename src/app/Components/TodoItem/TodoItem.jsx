@@ -17,7 +17,7 @@ import store from "../../store";
  *
  * NOTE: need to pass task id into callbacks as param
  */
-export default function TodoItem({handleChange, id, checked, text, deleteTask}) {
+export default function TodoItem({handleChange, id, isCompleted, text, deleteTask}) {
     return (
         <div className='task'>
             <div className='one-task'>
@@ -25,11 +25,11 @@ export default function TodoItem({handleChange, id, checked, text, deleteTask}) 
                     type='checkbox'
                     key={id}
                     id={id}
-                    checked={checked}
+                    checked={isCompleted}
                     onChange={handleChange}
-                    className={checked ? 'check-checked' : 'false'}
+                    className={isCompleted && 'check-checked'}
                 /><label htmlFor={id}/>
-                <p className={checked ? 'completed-task' : 'false'}>{text}</p>
+                <p className={isCompleted && 'completed-task'}>{text}</p>
             </div>
             <div
                 className='trash-style'
