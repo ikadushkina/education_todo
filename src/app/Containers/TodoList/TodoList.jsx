@@ -55,14 +55,15 @@ export class TodoList extends React.Component {
                     { list && list.map(elem => (
                         <TodoItem
                             {...elem}
-                            key={elem.id}
-                            id={elem.id}
-                            handleChange={() => this.props.onCheckTask(elem.id)}
-                            deleteTask={() => this.props.onDeleteTask(elem.id)}
+                            key={elem._id}
+                            id={elem._id}
+                            handleChange={() => this.props.onCheckTask(elem._id)}
+                            deleteTask={() => this.props.onDeleteTask(elem._id)}
                             isCompleted={elem.isCompleted}
                         />
                     ))}
                 </div>
+                <button onClick={this.props.onDeleteTask}>Delete all</button>
                 <div className={list.length ? 'options-panel' : 'none'}>
                     <button
                         disabled={isLoading}

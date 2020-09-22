@@ -4,13 +4,13 @@ const prefix = '/temp-todo';
 
 export default{
     getTasks() {
-        return axios.get(prefix)
+        return axios.get('/api/users')
     },
     addTask(text) {
-        return axios.post(prefix +'/add', { text })
+        return axios.post('/api/add', { text })
     },
     deleteTask(id) {
-        return axios.post(prefix + '/delete', { id })
+        return axios.post('/api/delete', { id })
     },
     checkTask(id) {
         return axios.post(prefix + '/check', { id })
