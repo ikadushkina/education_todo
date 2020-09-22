@@ -63,7 +63,6 @@ export class TodoList extends React.Component {
                         />
                     ))}
                 </div>
-                <button onClick={this.props.onDeleteTask}>Delete all</button>
                 <div className={list.length ? 'options-panel' : 'none'}>
                     <button
                         disabled={isLoading}
