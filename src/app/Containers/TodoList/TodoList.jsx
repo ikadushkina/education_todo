@@ -34,6 +34,14 @@ import {
  */
 export class TodoList extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            filter: 'All'
+        }
+
+    }
+
     componentDidMount() {
         this.props.onStart()
     }
@@ -45,14 +53,40 @@ export class TodoList extends React.Component {
         e.target.value = '';
     }
 
+    filterList = filter =>  {
+        switch (filter) {
+            case 'All':
+                this.setState({ filter: 'All'})
+                break
+            case 'ToDo':
+                this.setState({ filter: 'ToDo'})
+                break
+            case 'Completed':
+                this.setState({ filter: 'Completed'})
+                break
+        }
+    }
+
     render() {
         const {list, isLoading, error } = this.props;
+        console.log('filter -', this.state.filter);
+        console.log('....', list);
+
         return (
             <div className='main-container'>
                 {error && <h3 style={{color: 'red'}}>{error.message}</h3>}
                 <ToDoInput addTask={this.addTask}/>
                 <div className='task-container'>
-                    { list && list.map(elem => (
+                    { list && list.filter(elem => {
+                        switch (this.state.filter) {
+                            case 'Completed':
+                                return elem.isCompleted;
+                            case 'ToDo':
+                                return !elem.isCompleted;
+                            case  'All':
+                                return true;
+                        }
+                    }).map(elem => (
                         <TodoItem
                             {...elem}
                             key={elem._id}
@@ -64,22 +98,11 @@ export class TodoList extends React.Component {
                     ))}
                 </div>
                 <div className={list.length ? 'options-panel' : 'none'}>
-                    <button
-                        disabled={isLoading}
-                        onClick={this.props.onCheckAll}
-                        value='all'
-                        className='button-new'>
-                        {list.filter(elem => !elem.isCompleted).length} tasks left
-                    </button>
                     <RadioBadge
-                        bags={controlBadges}
-                        onChange={(a) => this.props.onFilters(a)}
-                    />
-                    <button
                         disabled={isLoading}
-                        onClick={this.props.onClearCompleted} value='clear'
-                        className={!list.filter(elem => elem.isCompleted).length ? 'button-hide' : 'button-new'}>clearCompleted
-                    </button>
+                        bags={controlBadges}
+                        onChange={(a) => this.filterList(a)}
+                    />
                 </div>
         </div>
         )
@@ -93,18 +116,6 @@ const mapDispatchToProps = dispatch => ({
         onAddTask: text => dispatch(tempAddTask(text)),
         onCheckTask: id => dispatch(tempCheckTask(id)),
         onDeleteTask: id => dispatch(tempDeleteTask(id)),
-        onCheckAll: () => dispatch(tempCheckAll()),
-        onClearCompleted: () => dispatch(tempClearCompleted()),
-        onFilters: (filter) => {
-            switch (filter) {
-                case 'All':
-                    return dispatch(tempFilterAll());
-                case 'ToDo':
-                    return dispatch(tempFilterTodo());
-                case 'Completed':
-                    return dispatch(tempFilterCompleted())
-            }
-        }
     }
 );
 //todo implement this function
