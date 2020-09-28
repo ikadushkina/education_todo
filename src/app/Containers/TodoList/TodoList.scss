@@ -103,3 +103,24 @@ input[type="radio"]:checked + label {
   height: 90px;
 
 }
+.logout{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.button {
+  background: none;
+  height: 35px;
+  font-size: 15px;
+  border: 1px solid darkgrey;
+  border-radius: 2px;
+  color: darkgrey;
+  outline: none;
+}
+
+.button:hover {
+  outline: none;
+  color: black;
+  border: 1px solid black;
+}

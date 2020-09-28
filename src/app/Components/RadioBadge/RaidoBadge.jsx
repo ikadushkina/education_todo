@@ -14,7 +14,7 @@ import React from 'react';
 const RadioBadge = ({checked, onChange, bags }) => {
     return (
         <div className='div-buttons'>
-            {bags.map(item => <div>
+            {bags.map(item => <div key={item}>
                 <input type='radio'
                        name='radio'
                        id={item + 'id'}

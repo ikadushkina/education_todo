@@ -1,8 +1,5 @@
 import React from 'react';
-// import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-// import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import './TodoItem.scss';
-import store from "../../store";
 
 /**
  * todo implement here component which will show todo item
@@ -27,9 +24,9 @@ export default function TodoItem({handleChange, id, isCompleted, text, deleteTas
                     id={id}
                     checked={isCompleted}
                     onChange={handleChange}
-                    className={isCompleted && 'check-checked'}
+                    className={isCompleted ? 'check-checked':''}
                 /><label htmlFor={id}/>
-                <p className={isCompleted && 'completed-task'}>{text}</p>
+                <p className={isCompleted ? 'completed-task':''}>{text}</p>
             </div>
             <div
                 className='trash-style'

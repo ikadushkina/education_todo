@@ -67,3 +67,20 @@ export const tempDeleteTask = id => dispatch => {
         });
     });
 }
+
+export const tempRegister = (login, pass) => dispatch => {
+    dispatch({
+        type: constants.TEMP_TODO_START
+    });
+    return TodoService.register(login, pass).then( res => {
+        dispatch({
+            type: constants.TEMP_TODO_SUCCESS,
+            payload: res.data.list
+        });
+    }).catch(err => {
+        dispatch({
+            type: constants.TEMP_TODO_ERROR,
+            payload: err
+        });
+    });
+}

@@ -1,7 +1,6 @@
 import React from 'react';
 import TodoItem from '../../Components/TodoItem/TodoItem';
 import {connect} from 'react-redux'
-
 /**
  * todo implement component called ToDoInput
  * which should receive onSubmit function which will be called on the press enter key
@@ -67,14 +66,22 @@ export class TodoList extends React.Component {
         }
     }
 
+    toLogin() {
+        this.props.history.push('/login');
+    }
+
     render() {
         const {list, isLoading, error } = this.props;
-        console.log('filter -', this.state.filter);
-        console.log('....', list);
-
         return (
+            <div>
+                <div className="logout">
+                    <button className={'button'} onClick={() => this.toLogin()}>Log Out</button>
+                </div>
             <div className='main-container'>
-                {error && <h3 style={{color: 'red'}}>{error.message}</h3>}
+                {error && (()=>{
+                    this.toLogin()
+                    return <h3 style={{color: 'red'}}>{error.message}</h3>
+                })()}
                 <ToDoInput addTask={this.addTask}/>
                 <div className='task-container'>
                     { list && list.filter(elem => {
@@ -97,7 +104,7 @@ export class TodoList extends React.Component {
                         />
                     ))}
                 </div>
-                <div className={list.length ? 'options-panel' : 'none'}>
+                <div className={'options-panel'}>
                     <RadioBadge
                         disabled={isLoading}
                         bags={controlBadges}
@@ -105,6 +112,7 @@ export class TodoList extends React.Component {
                     />
                 </div>
         </div>
+            </div>
         )
     }
 }
